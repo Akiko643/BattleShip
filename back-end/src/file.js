@@ -59,6 +59,9 @@ export const getMatch = async (path) => {
     const folder = "../data/games/";
     const dataPath = folder + path + ".txt";
     const lines = [];
+    const data = await readFile("../data/data.json");
+    const obj = JSON.parse(data);
+
     await eachLine(dataPath, (line, last) => {
         lines.push(line);
     });
@@ -66,6 +69,8 @@ export const getMatch = async (path) => {
     const turns = [];
     const firstPlayer = path.split("_")[0];
     const secondPlayer = path.split("_")[2];
+    const firstPlayerMap = obj.find((el) => el.username === firstPlayer).map;
+    const secondPlayerMap = obj.find((el) => el.username === secondPlayer).map;
 
     for (let i = 0; i < totalTurns; i++) {
         const arr = lines[i + 1].split(" ");
@@ -88,5 +93,25 @@ export const getMatch = async (path) => {
         turns,
         winner,
         score,
+        firstPlayerMap,
+        secondPlayerMap,
     };
+};
+
+export const getLeaderboard = async () => {
+    const dataPath = "../data/leaderboard.txt";
+    const lines = [];
+    await eachLine(dataPath, (line, last) => {
+        lines.push(line);
+    });
+
+    return lines.map((line) => {
+        const arr = line.split(": ");
+        const username = arr[0];
+        const score = parseFloat(arr[1]);
+        return {
+            username,
+            score,
+        };
+    });
 };
