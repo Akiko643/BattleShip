@@ -1,25 +1,18 @@
 #include <bits/stdc++.h>
-#define pb push_back
 using namespace std;
 
-typedef vector<int> VI;
-typedef vector<VI> VVI;
-typedef vector<VVI> VVVI;
-
-
-VVVI boards;
+vector<vector<vector<int>>> boards;
 vector <string> usernames;
-vector <function<pair<int, int> (VVI)> > shooters;
+vector <function<pair<int, int> (vector<vector<int>>)> > shooters;
 vector <double> scores;
-short int all_boards[200][10][10];
-
+int all_boards[200][10][10];
 
 void fight(int id1, int id2) {
     int ids[] = {id1, id2};
-    VVI board[2]; board[0] = boards[id1]; board[1] = boards[id2];
-    VVVI board1(2, VVI(10, VI(10, 3))); // 0 empty, 1 head, 2 body, 3 = unknown
-    vector <function<pair<int, int> (VVI)> > shooter(2); shooter[0] = shooters[id1]; shooter[1] = shooters[id2];
-    VI destroyed(2, 0);
+    vector<vector<int>> board[2]; board[0] = boards[id1]; board[1] = boards[id2];
+    vector<vector<vector<int>>> board1(2, vector<vector<int>>(10, vector<int>(10, 3))); // 0 empty, 1 head, 2 body, 3 = unknown
+    vector <function<pair<int, int> (vector<vector<int>>)> > shooter(2); shooter[0] = shooters[id1]; shooter[1] = shooters[id2];
+    vector<int> destroyed(2, 0);
     int winner = 0;
     /*
         players
@@ -57,25 +50,24 @@ void fight(int id1, int id2) {
 
 vector <int> possible, next_possible;
 signed main() {
-    // inside codes.txt
+    // inside code.txt
     {
-        function<pair<int, int> (vector<vector<int>>)> shooter = [&](VVI board) {
+        function<pair<int, int> (vector<vector<int>>)> shooter = [&](vector<vector<int>> board) {
             for (int i = 0; i < 10; i++)
             for (int j = 0; j < 10; j++)
                 if (board[i][j] == 3) return make_pair(i, j);
             return make_pair(-1, -1);
         };
-        shooters.pb(shooter);
-        shooters.pb(shooter);
+        shooters.push_back(shooter);
     }
     // boards should be inside boards.txt, usernames should be inside usernames.txt
-    ifstream getBoard("../data/boards.txt"), getUsername("../data/usernames.txt");
+    ifstream getBoard("../data/map.txt"), getUsername("../data/user.txt");
     int n; getBoard >> n;
     for (int p = 0; p < n; p++) {
-        VVI curBoard(10, VI(10));
+        vector<vector<int>> curBoard(10, vector<int>(10));
         for (int i = 0; i < 10; i++)
         for (int j = 0; j < 10; j++) getBoard >> curBoard[i][j];
-        boards.pb(curBoard);
+        boards.push_back(curBoard);
     }
     getUsername >> n;
     for (int p = 0; p < n; p++) {
@@ -88,7 +80,7 @@ signed main() {
         if (i != j) fight(i, j);
     
     { // broken_bot
-        VVI broken_bot_map = {
+        vector<vector<int>> broken_bot_map = {
             {0,0,0,0,2,0,0,1,0,0},
             {0,0,1,1,1,1,1,1,0,1},
             {0,0,0,0,1,0,2,1,1,1},
@@ -100,12 +92,12 @@ signed main() {
             {0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0}
         };
-        function <pair <int, int> (VVI)> shooter = [&](VVI board) {
+        function <pair <int, int> (vector<vector<int>>)> shooter = [&](vector<vector<int>> board) {
             next_possible.clear();
-            VVI guess(10, VI(10, 0)), cur;
+            vector<vector<int>> guess(10, vector<int>(10, 0)), cur;
             for (int i = 0; i < 10; i++)
             for (int j = 0; j < 10; j++) 
-                if (board[i][j] != 3) cur.pb({i, j, board[i][j]});
+                if (board[i][j] != 3) cur.push_back({i, j, board[i][j]});
             
             for (int& id : possible) {
                 bool yes = 1;
@@ -133,8 +125,8 @@ signed main() {
         };
         
         usernames.push_back("ThreeMusketeer");
-        boards.pb(broken_bot_map);
-        shooters.pb(shooter);
+        boards.push_back(broken_bot_map);
+        shooters.push_back(shooter);
         ifstream in("../data/broken_bot_helper.txt");
         
         int N; in >> N;
@@ -146,10 +138,10 @@ signed main() {
         }
         for (int i = 0; i < n; i++) {
             possible.clear();
-            for (int j = 0; j < N; j++) possible.pb(j);
+            for (int j = 0; j < N; j++) possible.push_back(j);
             fight(n, i);
             possible.clear();
-            for (int j = 0; j < N; j++) possible.pb(j);
+            for (int j = 0; j < N; j++) possible.push_back(j);
             fight(i, n);
         }
     }
