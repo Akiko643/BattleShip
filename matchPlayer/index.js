@@ -127,7 +127,7 @@ document.getElementById("play").onclick = async () => {
   for (let plane of matchData.firstPlayerPlane)
     new Plane(plane.type, plane.x, plane.y, 1);
 
-  for (let plane of matchData.firstPlayerPlane)
+  for (let plane of matchData.secondPlayerPlane)
     new Plane(plane.type, plane.x, plane.y, 2);
 
   let indx = 0;
