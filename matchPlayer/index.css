@@ -1,13 +1,23 @@
-body {
-  background-color: #1977bc;
+.flex {
   display: flex;
-  height: 100vh;
-  align-items: center;
-  justify-content: space-between;
+}
+
+body {
+  text-align: center;
+  background-color: #1977bc;
   padding-left: 5vw;
   padding-right: 5vw;
   font-family: sans-serif;
-  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .ace_scrollbar::-webkit-scrollbar {
@@ -88,7 +98,8 @@ body {
 }
 
 .input-style {
-  appearance: none;
+  text-align: center;
+  min-width: 300px;
   margin-top: 20px;
   background-color: #fafbfc;
   border: 1px solid rgba(27, 31, 35, 0.15);
@@ -114,4 +125,9 @@ body {
   vertical-align: middle;
   white-space: nowrap;
   word-wrap: break-word;
+}
+
+h1 {
+  color: white;
+  font-size: 32px;
 }
