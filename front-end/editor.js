@@ -25,7 +25,7 @@ document.getElementById("push").onclick = () => {
     redirect: "follow",
   };
 
-  fetch("localhost:3000", requestOptions)
+  fetch("http://192.168.123.140:3000", requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.log("error", error));
