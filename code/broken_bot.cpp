@@ -41,37 +41,37 @@ void fight() {
 	}
     VVI board1(10, VI(10, 3)); // 0 empty, 1 head, 2 body, 3 = unknown
 	function <pair <int, int> (VVI)> shooter = [&](VVI board) {
-	        next_possible.clear();
-	        VVI guess(10, VI(10, 0)), cur;
-	        for (int i = 0; i < 10; i++)
-	        for (int j = 0; j < 10; j++) 
-	            if (board[i][j] != 3) cur.pb({i, j, board[i][j]});
-	        
-	        for (int& id : possible) {
-	            bool yes = 1;
-	            for (auto el : cur) {
-	                int a = el[0], b = el[1], c = el[2];
-	                d = all_boards[id][a][b];
-	                if (c == 0 && d > 0) {
-	                    yes = 0;
-	                    break;
-	                }
-	            }
-	            if (yes) {
-	                next_possible.push_back(id);
-	                for (int i = 0; i < 10; i++)
-	                for (int j = 0; j < 10; j++) {
-	                    guess[i][j] += (all_boards[id][i][j] > 0 && board[i][j] == 3);
-	                }
-	            }
-	        }
-	        int a = 0, b = 0;
-	        for (int i = 0; i < 10; i++)
-	        for (int j = 0; j < 10; j++)
-	            if (guess[i][j] > guess[a][b]) tie(a, b) = make_pair(i, j);
-	        
-	        return make_pair(a, b);
-	    };
+        next_possible.clear();
+        VVI guess(10, VI(10, 0)), cur;
+        for (int i = 0; i < 10; i++)
+        for (int j = 0; j < 10; j++) 
+            if (board[i][j] != 3) cur.pb({i, j, board[i][j]});
+        
+        for (int& id : possible) {
+            bool yes = 1;
+            for (auto el : cur) {
+                int a = el[0], b = el[1], c = el[2];
+                d = all_boards[id][a][b];
+                if (c == 0 && d > 0) {
+                    yes = 0;
+                    break;
+                }
+            }
+            if (yes) {
+                next_possible.push_back(id);
+                for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++) {
+                    guess[i][j] += (all_boards[id][i][j] > 0 && board[i][j] == 3);
+                }
+            }
+        }
+        int a = 0, b = 0;
+        for (int i = 0; i < 10; i++)
+        for (int j = 0; j < 10; j++)
+            if (guess[i][j] > guess[a][b]) tie(a, b) = make_pair(i, j);
+        
+        return make_pair(a, b);
+    };
     int destroyed = 0;
     int turn = 0, turnCount = 1;
     double score_gained;
