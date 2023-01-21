@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { mapValidation, codeValidation } from "./validation.js";
-import { generateData, getMatch, saveData } from "./file.js";
+import { generateData, getLeaderboard, getMatch, saveData } from "./file.js";
 
 const app = express();
 const port = 3000;
@@ -27,6 +27,16 @@ app.get("/match/:path", async (req, res) => {
     try {
         const { path } = req.params;
         const data = await getMatch(path);
+        return res.send({ message: "Success!", status: 200, data: data });
+    } catch (error) {
+        console.log("Error", error);
+        return res.send({ message: error, status: 400 });
+    }
+});
+
+app.get("/leaderboard", async (req, res) => {
+    try {
+        const data = await getLeaderboard();
         return res.send({ message: "Success!", status: 200, data: data });
     } catch (error) {
         console.log("Error", error);

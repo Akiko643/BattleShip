@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<vector<vector<int>>> boards;
+vector <string> usernames;
+vector <function<pair<int, int> (vector<vector<int>>)> > shooters;
+vector <double> scores;
+int all_boards[200][10][10];
+
+void fight(int id1, int id2) {
+    int ids[] = {id1, id2};
+    vector<vector<int>> board[2]; board[0] = boards[id1]; board[1] = boards[id2];
+    vector<vector<vector<int>>> board1(2, vector<vector<int>>(10, vector<int>(10, 3))); // 0 empty, 1 head, 2 body, 3 = unknown
+    vector <function<pair<int, int> (vector<vector<int>>)> > shooter(2); shooter[0] = shooters[id1]; shooter[1] = shooters[id2];
+    vector<int> destroyed(2, 0);
+    int winner = 0;
+    /*
+        players
+        actions
+    */
+    vector <string> actions;
+    int turn = 0, turnCount = 1;
+    double score_gained;
+    string file_name = "../data/games/" + usernames[id1] + "_VS_" + usernames[id2] + ".txt";
+    ofstream output(file_name.c_str());
+
+    for (;; turn^=1, turnCount++) {
+        int x, y; tie(x, y) = shooter[turn](board1[turn]);
+        board1[turn][x][y] = board[turn^1][x][y];
+        actions.push_back(usernames[ids[turn]] + " " + to_string(x) + " " + to_string(y) + " " + to_string(board1[turn][x][y]));
+        if (board[turn^1][x][y] == 2) {
+            if (++destroyed[turn] == 3) {
+                winner = turn;
+                score_gained = (120 - (turnCount + 1) / 2) * (1.0 + 1.2 / 3 * (3 - destroyed[turn^1]));
+                break;
+            }
+        }
+        if (board[turn^1][x][y] != 0) {
+            turn ^= 1;
+            turnCount--;
+            continue;
+        }
+    }
+    scores[ids[winner]] += score_gained;
+    output << actions.size() << '\n';
+    for (auto action : actions) output << action << '\n';
+    output << usernames[ids[winner]] << " won and gained " << score_gained << " scores!";
+    cout << usernames[ids[winner]] << " won and gained " << score_gained << " scores!\n";
+}
+
+vector <int> possible, next_possible;
+signed main() {
+    // inside code.txt
