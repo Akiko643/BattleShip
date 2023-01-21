@@ -9,14 +9,15 @@ const appendFile = util.promisify(fs.appendFile);
 const eachLine = util.promisify(lineReader.eachLine);
 const ex = util.promisify(exec);
 
-export const saveData = async ({ username, map, code }) => {
+export const saveData = async ({ username, map, code, planes }) => {
     const userData = {
         username,
         map,
         code,
+        planes,
     };
 
-    const path = "./data/data.json";
+    const path = "../data/data.json";
     const data = await readFile(path);
     const obj = JSON.parse(data);
     const ind = obj.findIndex((el) => el.username === username);
@@ -97,8 +98,16 @@ export const getMatch = async (path) => {
     const turns = [];
     const firstPlayer = path.split("_")[0];
     const secondPlayer = path.split("_")[2];
+
     const firstPlayerMap = obj.find((el) => el.username === firstPlayer).map;
     const secondPlayerMap = obj.find((el) => el.username === secondPlayer).map;
+    const firstPlayerPlane = obj.find(
+        (el) => el.username === firstPlayer
+    ).planes;
+
+    const secondPlayerPlane = obj.find(
+        (el) => el.username === secondPlayer
+    ).planes;
 
     for (let i = 0; i < totalTurns; i++) {
         const arr = lines[i + 1].split(" ");
@@ -123,6 +132,8 @@ export const getMatch = async (path) => {
         score,
         firstPlayerMap,
         secondPlayerMap,
+        firstPlayerPlane,
+        secondPlayerPlane,
     };
 };
 

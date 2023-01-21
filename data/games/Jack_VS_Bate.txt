@@ -59,27 +59,27 @@ Bate 2 7 1
 Bate 2 8 0
 Jack 2 9 0
 Bate 2 9 0
-Jack 3 0 1
+Jack 3 0 0
+Bate 3 0 0
 Jack 3 1 1
 Jack 3 2 1
 Jack 3 3 1
-Jack 3 4 1
-Jack 3 5 1
-Jack 3 6 1
-Jack 3 7 1
-Jack 3 8 1
-Jack 3 9 1
-Jack 4 0 0
-Bate 3 0 1
+Jack 3 4 0
 Bate 3 1 1
 Bate 3 2 1
 Bate 3 3 1
-Bate 3 4 1
-Bate 3 5 1
+Bate 3 4 0
+Jack 3 5 0
+Bate 3 5 0
+Jack 3 6 1
+Jack 3 7 1
+Jack 3 8 1
+Jack 3 9 0
 Bate 3 6 1
 Bate 3 7 1
 Bate 3 8 1
-Bate 3 9 1
+Bate 3 9 0
+Jack 4 0 0
 Bate 4 0 0
 Jack 4 1 0
 Bate 4 1 0
@@ -104,4 +104,4 @@ Bate 5 0 0
 Jack 5 1 0
 Bate 5 1 0
 Jack 5 2 2
-Jack won and gained 127.4 scores!
+Jack won and gained 121.8 scores!
