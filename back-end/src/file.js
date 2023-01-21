@@ -33,6 +33,9 @@ export const generateData = async () => {
 
     const data = await readFile(dataPath);
     const obj = JSON.parse(data);
+    await writeFile(userPath, "");
+    await writeFile(mapPath, "");
+    await writeFile(codePath, "");
 
     await appendFile(userPath, JSON.stringify(obj.length) + "\n");
     await appendFile(mapPath, JSON.stringify(obj.length) + "\n");
@@ -40,12 +43,14 @@ export const generateData = async () => {
 
     for (let i = 0; i < obj.length; i++) {
         const { username, map, code } = obj[i];
-        await appendFile(userPath, username + " ");
+        await appendFile(userPath, username + "\n");
         for (let j = 0; j < map.length; j++) {
             for (let k = 0; k < map[j].length; k++) {
                 await appendFile(mapPath, JSON.stringify(map[j][k]) + " ");
             }
+            await appendFile(mapPath, "\n");
         }
+        await appendFile(mapPath, "\n");
         const fixedCode =
             "    {\n" +
             code +
