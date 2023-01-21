@@ -102,6 +102,8 @@ function findNear(pos) {
   return Math.floor(pos / grid + 0.5) * grid;
 }
 
+let planes = [];
+
 function targetValid(x, y, type) {
   x = findNear(x) / grid;
   y = findNear(y) / grid;
@@ -148,8 +150,9 @@ let planeCount = 0;
 
 function onDragStart() {
   if (this.initial) {
-    if (planeCount >= 3) return;
-    planeCount++;
+    if (planes.length >= 3) return;
+    planes.push(this);
+
     new Plane(this.type);
     this.sprite.height *= 2;
     this.sprite.width *= 2;
@@ -178,9 +181,10 @@ function onDragEnd() {
     if (
       !targetValid(dragTarget.sprite.x, dragTarget.sprite.y, dragTarget.type)
     ) {
+      let indx = planes.indexOf(dragTarget);
+      if (indx > -1) planes.splice(indx, 1);
       dragTarget.sprite.parent.removeChild(dragTarget.sprite);
       dragTarget.sprite.destroy();
-      planeCount--;
       dragTarget = null;
       return;
     }
