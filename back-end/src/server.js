@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { mapValidation, codeValidation } from "./validation.js";
-import { saveData } from "./file.js";
+import { generateData, saveData } from "./file.js";
 
 const app = express();
 const port = 3000;
@@ -13,7 +13,15 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-app.post("/generate", (req, res) => {});
+app.post("/generate", (req, res) => {
+    try {
+        generateData();
+        return res.send({ message: "Success!", status: 200 });
+    } catch (error) {
+        console.log("Error", error);
+        return res.send({ message: error, status: 400 });
+    }
+});
 
 app.post("/", (req, res) => {
     try {
