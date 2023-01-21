@@ -1,2 +1,2 @@
 #!/bin/sh
-g++ ../code/game.cpp && ../code/a.exe
+g++ ../code/game.cpp && ./a.exe

@@ -56,8 +56,8 @@ class Plane {
 class Shoot {
   sprite;
 
-  constructor(x, y, app) {
-    this.sprite = new PIXI.Sprite(PIXI.Texture.from(`assets/shoot.png`));
+  constructor(x, y, app, res) {
+    this.sprite = new PIXI.Sprite(PIXI.Texture.from(`assets/mark-${res}.png`));
     this.sprite.x = x * grid;
     this.sprite.y = y * grid;
 
@@ -100,7 +100,32 @@ async function LoadData() {
 
 LoadData();
 
+let interval = null;
+
+function clearGame() {
+  document.getElementById(`win1`).style.display = "none";
+  document.getElementById(`lose1`).style.display = "none";
+  document.getElementById(`win2`).style.display = "none";
+  document.getElementById(`lose2`).style.display = "none";
+  for (let i = 0; i < sprites.length; i++) {
+    sprites[i].parent.removeChild(sprites[i]);
+    sprites[i].destroy();
+  }
+
+  sprites = [];
+
+  if (interval) {
+    clearInterval(interval);
+  }
+}
+
+async function win(player) {
+  document.getElementById(`win${player}`).style.removeProperty("display");
+  document.getElementById(`lose${3 - player}`).style.removeProperty("display");
+}
+
 document.getElementById("play").onclick = async () => {
+  clearGame();
   let opt1 = document.getElementById("p1").value;
   let opt2 = document.getElementById("p2").value;
 
@@ -117,6 +142,7 @@ document.getElementById("play").onclick = async () => {
     .then((response) => response.text())
     .then((result) => {
       matchData = JSON.parse(result).data;
+      console.log(matchData);
     })
     .catch((error) => console.log("error", error));
 
@@ -131,28 +157,20 @@ document.getElementById("play").onclick = async () => {
     new Plane(plane.type, plane.x, plane.y, 2);
 
   let indx = 0;
-  let interval = setInterval(() => {
+  interval = setInterval(() => {
     if (indx == matchData.turns.length) {
       clearInterval(interval);
       interval = null;
+      if (matchData.winner == matchData.firstPlayer) win(1);
+      else win(2);
       return;
     }
     let turn = matchData.turns[indx];
     if (turn.player == matchData.firstPlayer) {
-      new Shoot(turn.x + 1, turn.y + 1, 2);
+      new Shoot(turn.y + 1, turn.x + 1, 2, turn.result);
     } else {
-      new Shoot(turn.x + 1, turn.y + 1, 1);
+      new Shoot(turn.y + 1, turn.x + 1, 1, turn.result);
     }
     indx++;
-  }, 500);
+  }, 10);
 };
-
-function clearGame() {
-  for (let i = 0; i < sprites.length; i++) {
-    sprites[i].parent.removeChild(sprites[i]);
-    sprites[i].destroy();
-  }
-
-  sprites = [];
-  if (!interval) clearInterval(interval);
-}
