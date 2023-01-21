@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://pixijs.download/release/pixi.js"></script>
+    <link rel="stylesheet" href="index.css" />
+    <script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script
+      src="src/theme-twilight.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <style type="text/css" media="screen">
+      body {
+        overflow: hidden;
+      }
+
+      #editor {
+        min-width: 40vw;
+        min-height: 80vh;
+      }
+    </style>
+  </head>
+  <body class="flex">
+    <div id="root"></div>
+    <div>
+      <div id="editor"></div>
+      <input
+        id="name"
+        type="text"
+        placeholder="Enter your player name!"
+        class="input-style"
+      />
+      <button class="button-4" id="push">Submit</button>
+    </div>
+  </body>
+  <script src="index.js"></script>
+  <script src="editor.js"></script>
+</html>
