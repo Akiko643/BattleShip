@@ -7,33 +7,33 @@ editor.setValue(cppcode);
 editor.clearSelection();
 
 document.getElementById("push").onclick = () => {
-  let code = editor.getValue();
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  const username = document.getElementById("name").value;
-  let sendPlanes = [];
-  for (let a of planes) {
-    sendPlanes.push({ x: a.sprite.x, y: a.sprite.y, type: a.type });
-  }
+    let code = editor.getValue();
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    const username = document.getElementById("name").value;
+    let sendPlanes = [];
+    for (let a of planes) {
+        sendPlanes.push({ x: a.sprite.x, y: a.sprite.y, type: a.type });
+    }
 
-  console.log(sendPlanes);
+    console.log(sendPlanes);
 
-  var raw = JSON.stringify({
-    username,
-    map: gameMap,
-    code,
-    planes: sendPlanes,
-  });
+    var raw = JSON.stringify({
+        username,
+        map: gameMap,
+        code,
+        planes: sendPlanes,
+    });
 
-  var requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
+    var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+    };
 
-  fetch("http://192.168.1.67:3000", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log("error", error));
+    fetch("http://192.168.1.55:3000", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log("error", error));
 };
