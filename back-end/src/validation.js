@@ -4,7 +4,7 @@ export const mapValidation = (map) => {
     let head = 0,
         expectedHead = 3;
     let piece = 0,
-        expectedPiece = 33;
+        expectedPiece = 27;
     const HEAD = 2,
         PIECE = 1;
 
