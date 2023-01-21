@@ -47,11 +47,14 @@ export const generateData = async () => {
     await writeFile(mapPath, "");
 
     await appendFile(gamePath, gameFirstHalf);
-    await appendFile(userPath, JSON.stringify(obj.length) + "\n");
-    await appendFile(mapPath, JSON.stringify(obj.length) + "\n");
+    await appendFile(userPath, JSON.stringify(obj.length - 1) + "\n");
+    await appendFile(mapPath, JSON.stringify(obj.length - 1) + "\n");
 
     for (let i = 0; i < obj.length; i++) {
         const { username, map, code } = obj[i];
+        if (username === "ThreeMusketeer") {
+            continue;
+        }
         await appendFile(userPath, username + "\n");
         for (let j = 0; j < map.length; j++) {
             for (let k = 0; k < map[j].length; k++) {
