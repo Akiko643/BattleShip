@@ -10,7 +10,7 @@ typedef vector<VVI> VVVI;
 VVVI boards;
 vector <string> usernames;
 vector <function<pair<int, int> (VVI)> > shooters;
-vector <int> scores;
+vector <double> scores;
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 
@@ -21,12 +21,24 @@ void fight(int id1, int id2) {
     vector <function<pair<int, int> (VVI)> > shooter(2); shooter[0] = shooters[id1]; shooter[1] = shooters[id2];
     VI destroyed(2, 0);
     int winner = 0;
-    for (int turn = rng()%2, turnCount = 1;; turn^=1, turnCount++) {
+    /*
+        players
+        actions
+    */
+    vector <string> actions;
+    int turn = rng() % 2, turnCount = 1;
+    double score_gained;
+    string file_name = "../data/games/" + usernames[id1] + "_VS_" + usernames[id2] + ".txt";
+    ofstream output(file_name.c_str());
+
+    for (;; turn^=1, turnCount++) {
         int x, y; tie(x, y) = shooter[turn](board1[turn]);
         board1[turn][x][y] = board[turn^1][x][y];
+        actions.push_back(usernames[ids[turn]] + " " + to_string(x) + " " + to_string(y) + " " + to_string(board1[turn][x][y]));
         if (board[turn^1][x][y] == 2) {
             if (++destroyed[turn] == 3) {
                 winner = turn;
+                score_gained = (120 - (turnCount + 1) / 2) * (1.0 + 1.2 / 3 * (3 - destroyed[turn^1]));
                 break;
             }
         }
@@ -36,7 +48,9 @@ void fight(int id1, int id2) {
             continue;
         }
     }
-    cout << usernames[ids[winner]] << " won!!!\n";
+    output << actions.size() << '\n';
+    for (auto action : actions) output << action << '\n';
+    output << usernames[ids[winner]] << " won and gained " << score_gained << " scores!";
 }
 signed main() {
     // inside codes.txt
@@ -47,6 +61,7 @@ signed main() {
                 if (board[i][j] == 3) return make_pair(i, j);
             return make_pair(-1, -1);
         };
+        shooters.pb(shooter);
         shooters.pb(shooter);
     }
     // boards should be inside boards.txt, usernames should be inside usernames.txt
@@ -66,9 +81,7 @@ signed main() {
     }
     for (int t = 0; t < 10; t++)
     for (int i = 0; i < n; i++) 
-    for (int j = i+1; j < n; j++) { 
+    for (int j = i+1; j < n; j++) 
         fight(i, j);
-        // cout << i+1 << ' ' << j+1 << " done\n"; 
-    }
     
 }
