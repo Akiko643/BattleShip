@@ -46,7 +46,7 @@ app.get("/leaderboard", async (req, res) => {
 
 app.post("/", (req, res) => {
     try {
-        const { map, username, code } = req.body;
+        const { map, username, code, planes } = req.body;
         let mapValidate = mapValidation(map),
             codeValidate = codeValidation(code);
 
@@ -54,7 +54,7 @@ app.post("/", (req, res) => {
             throw mapValidate || codeValidate;
         }
 
-        saveData({ map, username, code });
+        saveData({ map, username, code, planes });
         return res.send({ message: "Success!", status: 200 });
     } catch (error) {
         console.log("Error", error);

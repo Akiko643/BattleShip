@@ -1,9 +1,9 @@
 105
 Jack 0 0 0
 Amraa 0 0 0
-Jack 0 1 2
-Jack 0 2 0
+Jack 0 1 0
 Amraa 0 1 0
+Jack 0 2 2
 Jack 0 3 0
 Amraa 0 2 2
 Amraa 0 3 0
@@ -59,27 +59,27 @@ Amraa 2 7 1
 Amraa 2 8 0
 Jack 2 9 0
 Amraa 2 9 0
-Jack 3 0 1
+Jack 3 0 0
+Amraa 3 0 0
 Jack 3 1 1
 Jack 3 2 1
 Jack 3 3 1
-Jack 3 4 1
-Jack 3 5 1
-Jack 3 6 1
-Jack 3 7 1
-Jack 3 8 1
-Jack 3 9 1
-Jack 4 0 0
-Amraa 3 0 1
+Jack 3 4 0
 Amraa 3 1 1
 Amraa 3 2 1
 Amraa 3 3 1
-Amraa 3 4 1
-Amraa 3 5 1
+Amraa 3 4 0
+Jack 3 5 0
+Amraa 3 5 0
+Jack 3 6 1
+Jack 3 7 1
+Jack 3 8 1
+Jack 3 9 0
 Amraa 3 6 1
 Amraa 3 7 1
 Amraa 3 8 1
-Amraa 3 9 1
+Amraa 3 9 0
+Jack 4 0 0
 Amraa 4 0 0
 Jack 4 1 0
 Amraa 4 1 0
@@ -104,4 +104,4 @@ Amraa 5 0 0
 Jack 5 1 0
 Amraa 5 1 0
 Jack 5 2 2
-Jack won and gained 127.4 scores!
+Jack won and gained 121.8 scores!

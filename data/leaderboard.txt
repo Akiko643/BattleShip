@@ -1,4 +1,4 @@
-ThreeMusketeer: 777.60
-Amraa: 495.60
-Bate: 254.80
-Jack: 254.80
+ThreeMusketeer: 1177.20
+Amraa: 243.60
+Bate: 243.60
+Jack: 243.60
